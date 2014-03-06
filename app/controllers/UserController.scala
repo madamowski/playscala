@@ -15,8 +15,8 @@ object UserController extends Controller {
     Ok(Json.toJson(list))
   }
 
-  def getUser() = Action{
-    val user = MyDatabase.getUser(1)
+  def getUser(id:Int) = Action{
+    val user = MyDatabase.getUser(id)
     Ok(Json.toJson(user))
 
     //    Ok(JsObject(
