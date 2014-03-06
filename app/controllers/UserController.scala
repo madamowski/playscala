@@ -12,19 +12,17 @@ object UserController extends Controller {
 
   def getUsers = Action{
     val list = MyDatabase.getUsers.toList
-    //Ok(Json.toJson(list))
-    Ok("users")
+    Ok(Json.toJson(list))
   }
 
   def getUser() = Action{
     val user = MyDatabase.getUser(1)
+    Ok(Json.toJson(user))
 
-    Ok(JsObject(
-      "id" -> JsNumber(user.id) ::
-      "name" -> JsString(user.name) ::
-        Nil))
-    //Ok(Json.toJson)
-    //Ok("users")
+    //    Ok(JsObject(
+    //      "id" -> JsNumber(user.id) ::
+    //      "name" -> JsString(user.name) ::
+    //        Nil))
   }
 
 //  public static Result getUsers()

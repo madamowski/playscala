@@ -1,11 +1,11 @@
 package models
 
 import play.api.libs.json._
-import play.api.libs.functional.syntax._
 
-case class User(id: Int, name: String){
+case class User(id: Int, name: String)
 
-implicit val userFormat = Json.format[User]
+object User {
+  implicit val userFormat = Json.format[User]
 }
 
 //  def this() = this(0, "")
