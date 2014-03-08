@@ -10,7 +10,7 @@ object Application extends Controller {
   }
 
   def test = Action {
-    Ok(views.html.test("Hello"))
+    Ok(views.html.user("Hello"))
   }
 
 }

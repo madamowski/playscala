@@ -10,56 +10,33 @@ import models._
  */
 object UserController extends Controller {
 
-  def getUsers = Action{
-    val list = MyDatabase.getUsers.toList
-    Ok(Json.toJson(list))
+  def index = Action {
+    Ok(views.html.index("Your new application is ready."))
   }
 
-  def getUser(id:Int) = Action{
-    val user = MyDatabase.getUser(id)
-    Ok(Json.toJson(user))
-
-    //    Ok(JsObject(
-    //      "id" -> JsNumber(user.id) ::
-    //      "name" -> JsString(user.name) ::
-    //        Nil))
+  def user = Action {
+    Ok(views.html.user("User Database"))
   }
 
-//  public static Result getUsers()
-//  {
-//    List<User> users = Database.getUsers();
-//    return ok(Json.toJson(users));
-//  }
-//
-//  public static Result getUser(Long id)
-//  {
-//    User user = Database.getUser(id);
-//    return user == null ? notFound() : ok(Json.toJson(user));
-//  }
-//
-  def createUser = Action { request =>
-    //val newUser = Json.fromJson(request.body,User.class)
-    Ok("created")
+  def getUser(id:Int) = Action {
+    Ok(Json.toJson(UserDatabase.getUser(id)))
   }
 
-//  public static Result createUser()
-//  {
-//    User newUser = Json.fromJson(request().body().asJson(), User.class);
-//    User inserted = Database.addUser(newUser);
-//    return created(Json.toJson(inserted));
-//  }
-//
-//  public static Result updateUser(Long id)
-//  {
-//    User user = Json.fromJson(request().body().asJson(), User.class);
-//    User updated = Database.updateUser(id, user);
-//    return ok(Json.toJson(updated));
-//  }
-//
-//  public static Result deleteUser(Long id)
-//  {
-//    Database.deleteUser(id);
-//    return noContent(); // http://stackoverflow.com/a/2342589/1415732
-//  }
+  def getUsers = Action {
+    Ok(Json.toJson(UserDatabase.getUsers))
+  }
+
+  def insertUser = Action { request =>
+    var json = request.body.asJson.get
+    var user = Json.fromJson[User](json).get
+    UserDatabase.insertUser(user)
+    //var newUser = Json.fromJson[User](Json.parse(request.body))
+    Ok("ok")
+  }
+
+  def deleteUser(id:Int) = Action {
+    UserDatabase.deleteUser(id)
+    Ok("ok")
+  }
 
 }

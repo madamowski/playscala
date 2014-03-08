@@ -1,0 +1,21 @@
+@(message: String)
+
+@main("Welcome to Play") {
+
+    @message
+
+    {{msg}}
+
+    {{'yet' + '!'}}
+
+    <p>Id: <input type="text" data-ng-model="newuser.id"/></p>
+    <p>Name: <input type="text" data-ng-model="newuser.name"/></p>
+    <p><button data-ng-click="addUser()">Add User</button></p>
+
+    <ul>
+        <li ng-repeat="user in users">
+            {{user.id}}.{{user.name}} <button data-ng-click="deleteUser(user.id)">Delete User</button>
+        </li>
+    </ul>
+
+}
