@@ -1,0 +1,68 @@
+Sqlite db
+=========
+Add sbt dependency in build.sbt
+"org.xerial" % "sqlite-jdbc" % "3.7.2",
+
+play application.conf
+----------------------
+#db.default.driver="org.sqlite.JDBC"
+#db.default.url="jdbc:sqlite:<full path to>/playscala/data/db/user.db"
+#db.default.user="sa"
+#db.default.password=""
+
+
+Postgresql
+===========
+
+Install on the mac
+http://postgresapp.com/
+
+Add sbt dependency in build.sbt
+libraryDependencies += "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+
+run psql command
+/Applications/Postgres.app/Contents/Versions/9.3/bin/psql
+
+create new database
+$ create database playscala
+
+db manager: pgadmin
+http://www.pgadmin.org/
+
+host: localhost
+port: 5433
+username: your local macuser
+
+create new user playscala and User(id integer not null, name character varying(50) not null) table
+
+play application.conf
+----------------------
+db.default.driver="org.postgresql.Driver"
+db.default.url="jdbc:postgresql://localhost/playscala"
+db.default.user="playscala"
+db.default.password=""
+
+
+
+Heroku & PlayFramework
+--------
+http://www.playframework.com/documentation/2.2.x/ProductionHeroku
+
+Install Heroku Toolkit
+
+Create new Heroku app
+$ heroku create
+
+Push play project to heroku
+$ git push heroku master
+
+Check if deployed ok
+$ heroku logs
+
+Open webapp
+$ heroku open
+
+Create Procfile in top directory to overwrite local postgresql with heroku one
+web: target/universal/stage/bin/playscala -Dhttp.port=$PORT -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=$DATABASE_URL
+
+connect pgadmin to heroku db (automaticaly created for play apps)
