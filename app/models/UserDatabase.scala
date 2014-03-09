@@ -11,7 +11,7 @@ object UserDatabase {
 
   def getUsers: List[User] = {
     DB.withConnection { implicit conn =>
-      val result = SQL("SELECT id, name from User")().map{row=>
+      val result = SQL("SELECT id, name from Users")().map{row=>
         new User(row[Int]("id"),row[String]("name"))
       }
       return result.toList
@@ -20,7 +20,7 @@ object UserDatabase {
 
   def getUser(id:Int): User = {
     DB.withConnection { implicit conn =>
-      val result = SQL("SELECT id, name from User WHERE id="+id)().map{row=>
+      val result = SQL("SELECT id, name from Users WHERE id="+id)().map{row=>
         new User(row[Int]("id"),row[String]("name"))
       }
       return result.toList(0)
@@ -29,13 +29,13 @@ object UserDatabase {
 
   def insertUser(user:User) = {
     DB.withConnection { implicit conn =>
-      val result = SQL("INSERT INTO User(id,name) VALUES("+user.id+",'"+user.name+"')").execute()
+      val result = SQL("INSERT INTO Users(id,name) VALUES("+user.id+",'"+user.name+"')").execute()
     }
   }
 
   def deleteUser(id:Int) = {
     DB.withConnection { implicit conn =>
-      val result = SQL("DELETE FROM User WHERE id="+id).execute()
+      val result = SQL("DELETE FROM Users WHERE id="+id).execute()
     }
   }
 }
